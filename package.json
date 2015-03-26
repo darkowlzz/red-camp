@@ -1,0 +1,24 @@
+{
+  "name": "red-camp",
+  "version": "0.0.0",
+  "description": "Project red-camp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node_modules/.bin/bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/STEPIndia/red-camp.git"
+  },
+  "author": "Sunny <indiasuny000@gmail.com> (darkowlzz)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/STEPIndia/red-camp/issues"
+  },
+  "homepage": "https://github.com/STEPIndia/red-camp",
+  "dependencies": {
+    "bower": "^1.3.12",
+    "express": "^4.12.3"
+  }
+}

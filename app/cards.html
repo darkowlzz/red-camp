@@ -1,0 +1,11 @@
+<div class="ground">
+  <md-content class="ground" layout="row" layout-sm="column" layout-align-gt-md="center center" ng-repeat="camps in campList">
+    <md-card ng-repeat="camp in camps" flex flex-gt-md="30">
+      <md-card-content>
+        <h2>{{ camp.title }}</h2>
+        <p>Date: {{ camp.date }}</p>
+        <p>Location: {{ camp.location }}</p>
+      </md-card-content>
+    </md-card>
+  </md-content>
+</div>
