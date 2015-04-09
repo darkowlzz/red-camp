@@ -13,47 +13,31 @@ redCamp.controller('MainCtrl', [
 
 
 redCamp.controller('RedCampCtrl', [
-  '$scope', '$routeParams', '$timeout',
-  function ($scope, $routeParams, $timeout) {
+  '$scope', '$routeParams', '$timeout', 'getList',
+  function ($scope, $routeParams, $timeout, getList) {
     $scope.description = 'This is the description part of the page. ' +
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat interdum felis sed interdum. Pellentesque ultrices est eget placerat tempor. Curabitur iaculis porttitor mauris. Sed dictum mattis est, sit amet tempor leo placerat id.';
 
-    /*
     $scope.campList = [];
-    $http.get()
-      .success(function (data) {
-        // organize the data and push to campList
-        $scope.campList.push(data);
-      });
-    */
 
-    // sample data
-    $scope.campList = [
-      [
-        { title: 'Blood Camp 1', location: 'Sector A', date: '11/4/2015' },
-        { title: 'Blood Camp 2', location: 'Sector B', date: '11/4/2015' }
-      ],
-      [
-        { title: 'Blood Camp 3', location: 'Sector C', date: '11/4/2015' },
-        { title: 'Blood Camp 4', location: 'Sector D', date: '11/4/2015' }
-      ],
-      [
-        { title: 'Blood Camp 5', location: 'Sector E', date: '11/4/2015' },
-        { title: 'Blood Camp 6', location: 'Sector F', date: '11/4/2015' }
-      ],
-      [
-        { title: 'Blood Camp 1', location: 'Sector A', date: '11/4/2015' },
-        { title: 'Blood Camp 2', location: 'Sector B', date: '11/4/2015' }
-      ],
-      [
-        { title: 'Blood Camp 3', location: 'Sector C', date: '11/4/2015' },
-        { title: 'Blood Camp 4', location: 'Sector D', date: '11/4/2015' }
-      ],
-      [
-        { title: 'Blood Camp 5', location: 'Sector E', date: '11/4/2015' },
-        { title: 'Blood Camp 6', location: 'Sector F', date: '11/4/2015' }
-      ]
-    ];
+    getList('/camps').then(function (data) {
+      var index = 0,
+          subList = [];
+      // push the items in pair of two
+      for (var i = 0; i < data.length; i++) {
+        subList.push(data[i]);
+        index++;
+        if (index == 2) {
+          index = 0;
+          $scope.campList.push(subList);
+          subList = [];
+        }
+      }
+      // push the partially filled subList
+      if (! _.isEmpty(subList)) {
+        $scope.campList.push(subList);
+      }
+    });
   }
 ]);
 
@@ -84,4 +68,24 @@ redCamp.config(['$mdThemingProvider', '$routeProvider',
       .otherwise({
         redirectTo: '/'
       });
+}]);
+
+
+/**
+ * getList service to fetch the list of camps.
+ *
+ * @param {String} uri
+ *    Target uri to fetch the data.
+ *
+ * @return {Promise}
+ *    Returns a promise which is completed when the whole of the requested
+ *    data is fetched.
+ */
+redCamp.factory('getList', ['$http', function ($http) {
+  return function (uri) {
+    var promise = $http.get(uri).then(function (resp) {
+      return resp.data;
+    });
+    return promise;
+  };
 }]);

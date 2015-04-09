@@ -2,9 +2,32 @@
 //===============================================
 var express = require('express'),
     router  = express.Router(),
-    app     = express();
+    app     = express(),
+    mongoose = require('mongoose');
 
 var port = process.env.port || 3000; //port set to 3000
+
+var uristring = process.env.MONGODB_URI || 'mongodb://localhost/step';
+
+mongoose.connect(uristring, function (err, res) {
+  if (err) {
+    console.log('Error connecting to db');
+  } else {
+    console.log('Succeeded in connecting to db');
+  }
+});
+
+var campSchema = new mongoose.Schema({
+  title: { type: String },
+  location: { type: String },
+  date: { type: String },
+  organizer: { type: String },
+  contact: { type: String },
+  id: { type: Number },
+  done: { type: Boolean }
+});
+var Camp = mongoose.model('camps', campSchema);
+
 
 //app specific configurations
 //==================================================
@@ -16,6 +39,17 @@ app.use('/', express.static(__dirname + '/app/'));
 
 router.get('/', function (req, res) {
 	res.render('/index.html');
+});
+
+router.get('/camps', function (req, res) {
+  Camp.find({}).exec(function (err, result) {
+    if (!err) {
+      res.json(result);
+    } else {
+      console.log('Error retrieving data');
+      res.json({ Error: 'failed to retrieve data' });
+    }
+  });
 });
 
 app.use('/', router);
