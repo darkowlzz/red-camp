@@ -5,7 +5,7 @@ var express = require('express'),
     app     = express(),
     mongoose = require('mongoose');
 
-var port = process.env.port || 3000; //port set to 3000
+var port = process.env.PORT || 3000; //port set to 3000
 
 var uristring = process.env.MONGODB_URI || 'mongodb://localhost/step';
 
