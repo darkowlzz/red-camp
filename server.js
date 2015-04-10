@@ -7,7 +7,8 @@ var express = require('express'),
 
 var port = process.env.PORT || 3000; //port set to 3000
 
-var uristring = 'mongodb://stepcamp:step000camp@ds047008.mongolab.com:47008/step';
+var uristring = process.env.MONGODB_URI || '';
+console.log('DB', uristring);
 
 mongoose.connect(uristring, function (err, res) {
   if (err) {
