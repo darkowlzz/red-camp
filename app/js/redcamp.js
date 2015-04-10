@@ -21,6 +21,7 @@ redCamp.controller('RedCampCtrl', [
     $scope.campList = [];
 
     getList('/camps').then(function (data) {
+      console.log('fetching list', JSON.stringify(data));
       var index = 0,
           subList = [];
       // push the items in pair of two
@@ -37,6 +38,7 @@ redCamp.controller('RedCampCtrl', [
       if (! _.isEmpty(subList)) {
         $scope.campList.push(subList);
       }
+      console.log('final list', JSON.stringify(data));
     });
   }
 ]);
